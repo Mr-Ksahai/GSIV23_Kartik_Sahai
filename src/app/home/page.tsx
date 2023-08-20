@@ -76,7 +76,7 @@ export default function Home() {
       .then((res) => {
         const movieData = res.data;
 
-        router.push(`/movie/${movieId}`);
+        // router.push(`/movie/${movieId}`);
         setMovieDetails(movieData);
       })
       .catch((error) => {});
