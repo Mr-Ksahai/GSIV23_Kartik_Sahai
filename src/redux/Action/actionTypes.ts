@@ -1,0 +1,5 @@
+export const LOAD_MOVIES = 'LOAD_MOVIES';
+export const SET_MOVIES = 'SET_MOVIES';
+export const SET_LOADING = 'SET_LOADING';
+export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY';
+export const SET_MOVIE_DETAILS = 'SET_MOVIE_DETAILS';
