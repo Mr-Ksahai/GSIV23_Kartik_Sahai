@@ -54,19 +54,7 @@ export default function Home() {
       });
   };
   const handleMovieClick = (movieId: number) => {
-    axios
-      .get(`https://api.themoviedb.org/3/movie/${movieId}`, {
-        params: {
-          api_key: process.env.NEXT_PUBLIC_API_KEY,
-          language: "en-US",
-        },
-      })
-      .then((res) => {
-        const movieData = res.data;
-
-        router.push(`/movie/${movieId}`);
-        setMovieDetails(movieData);
-      });
+    router.push(`/movie/${movieId}`);
   };
 
   useEffect(() => {

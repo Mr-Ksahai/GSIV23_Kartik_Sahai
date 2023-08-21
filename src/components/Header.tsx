@@ -6,6 +6,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import { useRouter } from "next/navigation";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
+
 interface HeaderProps {
   loadMovies: (page: number) => void;
   setSearchQuery: (query: string) => void;
@@ -21,9 +22,13 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const router = useRouter();
   const [searchResults, setSearchResults] = useState<IMovie[]>([]);
-  const navigateToMovieDetails = (movieId: any) => {};
+  const navigateToMovieDetails = (movieId: any) => {
+    router.push(`/movie/${movieId}`);
+
+  };
 
   return (
+    <>
     <header>
       <nav className="bg-white w-full border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex flex-wrap justify-between items-center">
@@ -38,7 +43,15 @@ const Header: React.FC<HeaderProps> = ({
               setSearchResults={setSearchResults}
             />
           )}
+         
 
+          <div className="cursor-pointer" onClick={() => router.push("/")}>
+            <HomeIcon fontSize="large" />
+          </div>
+        </div>
+      </nav>
+    </header>
+    
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 mt-6">
             {searchResults.map((movie) => (
               <MovieCard
@@ -51,12 +64,8 @@ const Header: React.FC<HeaderProps> = ({
               />
             ))}
           </div>
-          <div className="cursor-pointer" onClick={() => router.push("/")}>
-            <HomeIcon fontSize="large" />
-          </div>
-        </div>
-      </nav>
-    </header>
+    
+     </>
   );
 };
 
