@@ -7,7 +7,7 @@ interface MovieCardProps {
   rating: string;
   description: string;
   image: string;
-  onClick: ()=>void;
+  onClick: () => void;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({
@@ -46,7 +46,9 @@ const MovieCard: React.FC<MovieCardProps> = ({
         </Typography>
       </div>
       <div style={{ marginTop: "4%", transition: "max-height 0.3s" }}>
-        <Typography variant="description">{description}</Typography>
+        <Typography lineClamp={2} variant="description">
+          {description}
+        </Typography>
       </div>
     </div>
   );

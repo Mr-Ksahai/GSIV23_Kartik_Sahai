@@ -3,9 +3,7 @@ import React, { useEffect, useState } from "react";
 import { IMovie } from "@/interface/movie";
 import axios from "axios";
 import MovieCard from "@/components/MovieCard";
-
 import { useRouter } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
 import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 
@@ -13,7 +11,6 @@ export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [movies, setMovies] = useState<IMovie[]>([]);
-  const [isImgLoading, setIsImgLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
