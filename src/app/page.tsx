@@ -12,6 +12,7 @@ import Header from "@/components/Header";
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  console.log('id', searchParams)
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [isImgLoading, setIsImgLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -76,7 +77,7 @@ export default function Home() {
       .then((res) => {
         const movieData = res.data;
 
-        // router.push(`/movie/${movieId}`);
+        router.push(`/movie/${movieId}`);
         setMovieDetails(movieData);
       })
       .catch((error) => {});
