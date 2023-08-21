@@ -1,5 +1,5 @@
+'use client'
 import React, { useState, useEffect } from "react";
-import  {useRouter}  from "next/navigation";
 import axios from "axios";
 import MovieCard from "./MovieCard";
 import { IMovie } from "@/interface/movie";
@@ -7,19 +7,19 @@ import { IMovie } from "@/interface/movie";
 interface SearchComponentProps {
   loadMovies: (page: number) => void;
   setSearchQuery: (query: string) => void;
+  setSearchResults: React.Dispatch<React.SetStateAction<IMovie[]>>; 
 }
 
 const SearchComponent: React.FC<SearchComponentProps> = ({
   loadMovies,
   setSearchQuery,
+  setSearchResults, 
 }) => {
   const [input, setInput] = useState("");
-  const [searchResults, setSearchResults] = useState<IMovie[]>([]);
-  const router=useRouter();
 
   useEffect(() => {
     if (input.trim() === "") {
-      setSearchResults([]);
+      setSearchResults([]); 
       return;
     }
 
@@ -46,11 +46,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     return () => {
       clearTimeout(searchTimeout);
     };
-  }, [input]);
-
-  const navigateToMovieDetails = (movieId: any) => {
-    router.push(`/movie/${movieId}`);
-  };
+  }, [input, setSearchResults]); 
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,7 +55,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
   };
 
   return (
-    <form onSubmit={handleSearchSubmit}>
+    <form className="w-auto" onSubmit={handleSearchSubmit}>
       <input
         type="search"
         value={input}
@@ -68,18 +64,6 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
         placeholder="Search Upcoming Movies"
         required
       />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 mt-6">
-        {searchResults.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            title={movie.title}
-            rating={parseFloat(movie.vote_average).toFixed(1)}
-            description={movie.overview}
-            image={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-            onClick={() => navigateToMovieDetails(movie.id)}
-          />
-        ))}
-      </div>
     </form>
   );
 };

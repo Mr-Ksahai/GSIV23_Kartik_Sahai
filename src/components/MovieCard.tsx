@@ -22,12 +22,11 @@ const MovieCard: React.FC<MovieCardProps> = ({
       style={{
         border: "1px solid #e0e0e0",
         padding: "16px",
-        width: "300px",
         borderRadius: "8px",
         transition: "transform 0.3s, box-shadow 0.3s, border-color 0.3s",
         cursor: "pointer",
       }}
-      className="hover:scale-105 hover:shadow-lg hover:border-yellow-400 hover:border"
+      className="hover:scale-105 hover:shadow-lg hover:border-yellow-400 hover:border mt-2"
       onClick={onClick}
     >
       <Image src={image} alt={title} priority={true} width={500} height={500} />

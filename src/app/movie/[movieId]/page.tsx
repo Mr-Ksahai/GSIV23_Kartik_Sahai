@@ -11,16 +11,13 @@ import {
 import axios from "axios";
 import { CastMember, CrewMember, IMovie } from "@/interface/movie";
 import MovieDetail from "@/components/movieDetail";
-
-
-
-
+import Header from "@/components/Header";
 
 const MovieDetails: React.FC = () => {
   const router = useRouter();
   const params = useParams();
   const id = params.movieId;
-  console.log("param", params.movieId);
+  const [back, setBack] = useState(true)
   const [detail, setDetail] = useState<any>("");
   const [castName, setCastName] = useState<CastMember[]>([]);
   const [director, setDirector] = useState<CrewMember | null>(null);
@@ -53,6 +50,9 @@ const MovieDetails: React.FC = () => {
   }, []);
   return (
     <div>
+      <Header back={back} loadMovies={(page: number) => {}}
+        setSearchQuery={(query: string) => {}}/>
+      
       <MovieDetail
         title={detail.title}
         vote_average={parseFloat(detail.vote_average).toFixed(1)}
@@ -66,6 +66,7 @@ const MovieDetails: React.FC = () => {
         }
         id={0}
       />
+ 
     </div>
   );
 };

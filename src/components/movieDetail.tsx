@@ -14,7 +14,7 @@ const MovieDetail: React.FC<IMovie> = ({
   release_date,
 }) => {
   return (
-    <div className="relative border-2 border-gray-300 p-4 w-full cursor-pointer flex flex-col sm:flex-row item-center">
+    <div className="relative border-2 border-gray-300 p-4 w-full cursor-pointer flex flex-col sm:flex-row mt-2 item-center">
       <Image
         src={poster_path}
         alt={title}

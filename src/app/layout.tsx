@@ -1,4 +1,4 @@
-
+'use client'
 import Header from '@/components/Header'
 import './globals.css'
 import type { Metadata } from 'next'
@@ -20,8 +20,6 @@ export default function RootLayout({
   return (
  
     <html lang="en">
-      {/* <Header/> */}
-
       <body suppressHydrationWarning={true}>{children}</body>
     </html>
    
