@@ -10,7 +10,7 @@ import Header from "@/components/Header";
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  console.log('id', searchParams)
+  console.log("id", searchParams);
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -47,20 +47,10 @@ export default function Home() {
         }
       )
       .then((res) => {
-        const moviePromises = res.data.results.map((movie: any) =>
-          axios.get(
-            `https://api.themoviedb.org/3/movie/${movie.id}?api_key=${process.env.NEXT_PUBLIC_API_KEY}&append_to_response=videos`
-          )
-        );
-
-        Promise.all(moviePromises).then((movieDetails) => {
-          setMovies((prevMovies) => [
-            ...prevMovies,
-            ...movieDetails.map((detail) => detail.data),
-          ]);
-          setCurrentPage(page);
-          setIsLoadingMore(false);
-        });
+        const upcomingMovies = res.data.results;
+        setMovies((prevMovies) => [...prevMovies, ...upcomingMovies]);
+        setCurrentPage(page);
+        setIsLoadingMore(false);
       });
   };
   const handleMovieClick = (movieId: number) => {
@@ -76,8 +66,7 @@ export default function Home() {
 
         router.push(`/movie/${movieId}`);
         setMovieDetails(movieData);
-      })
-      .catch((error) => {});
+      });
   };
 
   useEffect(() => {

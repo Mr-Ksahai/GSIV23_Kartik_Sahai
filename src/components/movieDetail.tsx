@@ -43,11 +43,11 @@ const MovieDetail: React.FC<IMovie> = ({
         </div>
         <div className="flex mt-4">
           <Typography variant="description">Cast:</Typography>
-          <Typography className="ml-2" lineClamp={1} variant="description">act1, act2, act3, act4</Typography>
+          <Typography className="ml-2 line-clamp-1"  variant="description">{cast}</Typography>
         </div>
         <div className="flex mt-4">
           <Typography variant="description">Description:</Typography>
-          <Typography className="ml-2 " variant="description" >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quibusdam, modi minima voluptatum maxime error repellendus quos quidem odio labore aperiam, possimus numquam deserunt obcaecati vel vitae corrupti facilis harum nobis.</Typography>
+          <Typography className="ml-2" variant="description" >{overview}</Typography>
         </div>
       </div>
     </div>

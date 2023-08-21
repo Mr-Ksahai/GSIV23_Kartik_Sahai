@@ -46,7 +46,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
         </Typography>
       </div>
       <div style={{ marginTop: "4%", transition: "max-height 0.3s" }}>
-        <Typography lineClamp={2} variant="description">
+        <Typography className="line-clamp-2" variant="description">
           {description}
         </Typography>
       </div>
