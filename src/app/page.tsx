@@ -18,6 +18,9 @@ export default function Home() {
     loadMovies(1);
   }, []);
 
+  
+ 
+
   const loadMovies = (page: number) => {
     setIsLoadingMore(true);
     let searchMovie = new URLSearchParams(window.location.search).get("movie");
@@ -49,25 +52,39 @@ export default function Home() {
   };
 
   const handleMovieClick = (movieId: number) => {
+    console.log('clicked')
     router.push(`/movie/${movieId}`);
   };
 
+
+  useEffect(() => {
+    loadMovies(1);
+  }, [searchParams]);
+
+  
+
   return (
     <div>
-      <Header loadMovies={loadMovies} />
-      <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 mt-6">
-        {movies.map((movie, index) => (
-          <MovieCard
-            key={index}
-            title={movie.title}
-            rating={parseFloat(movie.vote_average).toFixed(1)}
-            description={movie.overview}
-            image={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-            onClick={() => handleMovieClick(movie.id)}
-          />
-        ))}
-      </div>
-      {isLoadingMore && <p>Loading movies...</p>}
+      <Header loadMovies={loadMovies} onSearch={handleDataFromChild2} />
+      {search.length === 0 && (
+        <div>
+          <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 mt-6">
+            {movies.map((movie, index) => (
+              <MovieCard
+                key={index}
+                title={movie.title}
+                rating={parseFloat(movie.vote_average).toFixed(1)}
+                description={movie.overview}
+                image={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                onClick={() => handleMovieClick(movie.id)}
+              />
+            ))}
+          </div>
+          {isLoadingMore && <p>Loading movies...</p>}
+        </div>
+      )}
+
+
     </div>
   );
 }

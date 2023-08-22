@@ -21,10 +21,15 @@ const Header: React.FC<HeaderProps> = ({ loadMovies, onSearch, back }) => {
   };
 
   useEffect(() => {
-    if (onSearch && searchResults.length > 0) {
-      onSearch(searchResults);
+    if (onSearch) {
+      if (searchResults.length > 0) {
+        onSearch(searchResults);
+      } 
+      else {
+        onSearch([]);
+      }
     }
-  }, [onSearch, searchResults]);
+  }, [searchResults]); 
 
   return (
     <>
