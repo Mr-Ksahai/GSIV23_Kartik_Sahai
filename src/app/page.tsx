@@ -34,6 +34,9 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isLoadingMore, currentPage]);
 
+  
+ 
+
   const loadMovies = (page: number) => {
     setIsLoadingMore(true);
     let searchMovie = searchParams.get("movie");
@@ -56,6 +59,7 @@ export default function Home() {
       });
   };
   const handleMovieClick = (movieId: number) => {
+    console.log('clicked')
     router.push(`/movie/${movieId}`);
   };
 
@@ -63,10 +67,12 @@ export default function Home() {
     loadMovies(1);
   }, [searchParams]);
 
+  
+
   return (
     <div>
       <Header loadMovies={loadMovies} onSearch={handleDataFromChild2} />
-      {search.length == 0 && (
+      {search.length === 0 && (
         <div>
           <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 mt-6">
             {movies.map((movie, index) => (
