@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
+import { IMovie } from "@/interface/movie";
 import axios from "axios";
 import MovieCard from "@/components/MovieCard";
-import Header from "@/components/Header";
-import { IMovie } from "@/interface/movie";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import Header from "@/components/Header";
 
 export default function Home() {
   const router = useRouter();
@@ -13,49 +13,55 @@ export default function Home() {
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [search, setSearch] = useState<IMovie[]>([]);
+
+  const handleDataFromChild2 = (data: any) => {
+    setSearch(data);
+  };
 
   useEffect(() => {
-    loadMovies(1);
-  }, []);
+    function handleScroll() {
+      if (
+        window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 500 &&
+        !isLoadingMore
+      ) {
+        loadMovies(currentPage + 1);
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isLoadingMore, currentPage]);
 
   
  
 
   const loadMovies = (page: number) => {
     setIsLoadingMore(true);
-    let searchMovie = new URLSearchParams(window.location.search).get("movie");
-
-    const apiUrl =
-      searchMovie !== null
-        ? `https://api.themoviedb.org/3/search/movie`
-        : `https://api.themoviedb.org/3/movie/upcoming`;
+    let searchMovie = searchParams.get("movie");
 
     axios
-      .get(apiUrl, {
-        params: {
-          api_key: process.env.NEXT_PUBLIC_API_KEY,
-          query: searchMovie,
-          language: "en-US",
-          page,
-        },
-      })
+      .get(
+        `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${page}`,
+        {
+          params: {
+            api_key: process.env.NEXT_PUBLIC_API_KEY,
+            query: searchMovie,
+          },
+        }
+      )
       .then((res) => {
         const upcomingMovies = res.data.results;
-        if (page === 1) {
-          setMovies(upcomingMovies);
-        } else {
-          setMovies((prevMovies) => [...prevMovies, ...upcomingMovies]);
-        }
+        setMovies((prevMovies) => [...prevMovies, ...upcomingMovies]);
         setCurrentPage(page);
         setIsLoadingMore(false);
       });
   };
-
   const handleMovieClick = (movieId: number) => {
     console.log('clicked')
     router.push(`/movie/${movieId}`);
   };
-
 
   useEffect(() => {
     loadMovies(1);
@@ -83,8 +89,6 @@ export default function Home() {
           {isLoadingMore && <p>Loading movies...</p>}
         </div>
       )}
-
-
     </div>
   );
 }
