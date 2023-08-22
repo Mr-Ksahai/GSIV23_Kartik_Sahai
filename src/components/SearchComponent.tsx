@@ -1,25 +1,22 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import MovieCard from "./MovieCard";
 import { IMovie } from "@/interface/movie";
 
 interface SearchComponentProps {
   loadMovies: (page: number) => void;
-  setSearchQuery: (query: string) => void;
-  setSearchResults: React.Dispatch<React.SetStateAction<IMovie[]>>; 
+  setSearchResults: React.Dispatch<React.SetStateAction<IMovie[]>>;
 }
 
 const SearchComponent: React.FC<SearchComponentProps> = ({
   loadMovies,
-  setSearchQuery,
-  setSearchResults, 
+  setSearchResults,
 }) => {
   const [input, setInput] = useState("");
 
   useEffect(() => {
     if (input.trim() === "") {
-      setSearchResults([]); 
+      setSearchResults([]);
       return;
     }
 
@@ -46,11 +43,10 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     return () => {
       clearTimeout(searchTimeout);
     };
-  }, [input, setSearchResults]); 
+  }, [input, setSearchResults]);
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchQuery(input);
     loadMovies(1);
   };
 

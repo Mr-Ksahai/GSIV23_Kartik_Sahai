@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import { IMovie } from "@/interface/movie";
 import axios from "axios";
 import MovieCard from "@/components/MovieCard";
@@ -10,12 +10,14 @@ import Header from "@/components/Header";
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  console.log("id", searchParams);
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [movieDetails, setMovieDetails] = useState(null);
+  const [search, setSearch] = useState<IMovie[]>([]);
+
+  const handleDataFromChild2 = (data: any) => {
+    setSearch(data);
+  };
 
   useEffect(() => {
     function handleScroll() {
@@ -63,10 +65,8 @@ export default function Home() {
 
   return (
     <div>
-      <Header loadMovies={loadMovies} setSearchQuery={setSearchQuery} />
-      {searchQuery.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 mt-6"></div>
-      ) : (
+      <Header loadMovies={loadMovies} onSearch={handleDataFromChild2} />
+      {search.length == 0 && (
         <div>
           <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 mt-6">
             {movies.map((movie, index) => (

@@ -51,7 +51,7 @@ const MovieDetails: React.FC = () => {
   return (
     <div>
       <Header back={back} loadMovies={(page: number) => {}}
-        setSearchQuery={(query: string) => {}}/>
+        />
       
       <MovieDetail
         title={detail.title}
