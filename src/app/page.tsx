@@ -13,6 +13,11 @@ export default function Home() {
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [search, setSearch] = useState<string | null>(null);
+
+  const handleDataFromChild2 = (data: any) => {
+    setSearch(data);
+  };
 
   useEffect(() => {
     loadMovies(1);
@@ -21,6 +26,7 @@ export default function Home() {
   const loadMovies = (page: number) => {
     setIsLoadingMore(true);
     let searchMovie = new URLSearchParams(window.location.search).get("movie");
+    
 
     const apiUrl =
       searchMovie !== null
@@ -54,7 +60,8 @@ export default function Home() {
 
   return (
     <div>
-      <Header loadMovies={loadMovies} />
+      <Header loadMovies={loadMovies} onSearch={handleDataFromChild2} />
+      {search == null && (
       <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 mt-6">
         {movies.map((movie, index) => (
           <MovieCard
@@ -67,6 +74,7 @@ export default function Home() {
           />
         ))}
       </div>
+      )}
       {isLoadingMore && <p>Loading movies...</p>}
     </div>
   );
